@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 
 interface IProps{
     onClose: () => void;
-    post: {
+    note: {
         description: [],
         tag: string,
         title: string,
     };
 }
 
-function Modal({onClose, post}: IProps) {
+function Modal({onClose, note}: IProps) {
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
 
@@ -18,9 +18,9 @@ function Modal({onClose, post}: IProps) {
       document.body.classList.remove("overflow-hidden");
     };
   }, []);
-  console.log(post);
+  console.log(note);
 
-  const renderedDescription = post.description.map((m: string) => {
+  const renderedDescription = note.description.map((m: string) => {
     return <div key="0" className="text-center text-sm m-4" dangerouslySetInnerHTML={{__html: m}}></div>;
 
 })
@@ -30,8 +30,8 @@ function Modal({onClose, post}: IProps) {
         <div className="fixed inset-0 bg-grayMain opacity-80" onClick={onClose}></div>
         <div className="fixed bg-whiteMain inset-80  bg-white rounded">
             <div className="flex flex-col justify-between h-full">
-            <div className="bg-graySecondary m-4 p-3 text-center text-3xl">{post.tag}</div>
-            <div className="text-center text-xl">{post.title}</div>
+            <div className="bg-graySecondary m-4 p-3 text-center text-3xl">{note.tag}</div>
+            <div className="text-center text-xl">{note.title}</div>
             <div className="bg-whiteMain">{renderedDescription}</div>
             </div>
         </div>

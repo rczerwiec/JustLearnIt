@@ -1,12 +1,13 @@
-import Logo from "../Main/components/Logo";
-import NavigationButton from "../Main/components/NavigationButton";
+import Logo from "../../shared/components/Logo";
+import NavigationButton from "../../shared/components/NavigationButton";
 import backIcon from "../../shared/images/svg/back-icon.svg";
-import {Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {stateToHTML} from "draft-js-export-html"
+import { stateToHTML } from "draft-js-export-html";
+import Input from "../../shared/components/Input";
 
 function CreateNote() {
   const navigate = useNavigate();
@@ -16,25 +17,27 @@ function CreateNote() {
   const [editorState, setEditorState] = useState<EditorState>(() =>
     EditorState.createEmpty()
   );
-  
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const desc = stateToHTML(editorState.getCurrentContent())
-      await axios.post("http://localhost:5000/posts",{
-        tag, title, description: desc
-      })
-      navigate("/");
-  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const desc = stateToHTML(editorState.getCurrentContent());
+    await axios.post("http://localhost:5000/posts", {
+      tag,
+      title,
+      description: desc,
+    });
+    navigate("/");
+  };
 
   const handleKeyCommand = (command: string) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
 
     if (newState) {
-      setEditorState(newState)
-      return 'handled';
+      setEditorState(newState);
+      return "handled";
     }
 
-    return 'not-handled';
+    return "not-handled";
   };
 
   return (
@@ -51,12 +54,12 @@ function CreateNote() {
         <div className="text-4xl m-4">New Note</div>
         <form className="w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col items-center">
-            <label className="text-xl mx-4 mt-4"  >Tag</label>
-            <input className="bg-graySecondary w-1/2 m-4 p-3 rounded" placeholder="Enter tag..." value={tag} onChange={(e) => {setTag(e.target.value)}}></input>
+            <label className="text-xl mx-4 mt-4">Tag</label>
+            <Input secondary primary={false} value={tag} onChange={setTag} placeholder="Enter a tag..."/>
           </div>
           <div className="flex flex-col  items-center">
             <label className="text-xl mx-4">Title</label>
-            <input className="bg-graySecondary w-1/2 m-4 p-3 rounded" placeholder="Enter title..." value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
+            <Input secondary primary={false} value={title} onChange={setTitle} placeholder="Enter a title..."/>
           </div>
 
           <div className="flex flex-col  items-center">

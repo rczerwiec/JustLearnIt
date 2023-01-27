@@ -1,7 +1,7 @@
-import NavigationButton from "./components/NavigationButton";
+import NavigationButton from "../../shared/components/NavigationButton";
 import AddIcon from "../../shared/images/svg/math-plus-icon.svg";
 import SearchBar from "./components/SearchBar";
-import Logo from "./components/Logo";
+import Logo from "../../shared/components/Logo";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import Card from "./components/Card";
@@ -20,11 +20,11 @@ function App() {
 
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState<[]>([]);
-  const [selectedPost, setSelectedPost] = useState<IDataElement>();
+  const [selectedNote, setSelectedNote] = useState<IDataElement>();
   const [searchBarValue, setSearchBarValue] = useState<string>("");
 
   const handleShowModal = (p: IDataElement) => {
-    setSelectedPost(p)
+    setSelectedNote(p)
     setShowModal(true);
   }
   const handleCloseModal = () => {
@@ -39,8 +39,8 @@ function App() {
     if (o.title.toLowerCase().includes(searchBarValue.toLowerCase()) || o.tag.toLowerCase().includes(searchBarValue.toLowerCase())) return o;
   });
 
-  const renderedPosts = renderedValue.map((p, index) => {
-    return <Card key={index} post={p} onClick={handleShowModal}/>;
+  const renderedNotes = renderedValue.map((n, index) => {
+    return <Card key={index} note={n} onClick={handleShowModal}/>;
   });
 
   const fetchBooks = useCallback(async () => {
@@ -50,7 +50,7 @@ function App() {
 
 
 
-  const modal = <Modal onClose={handleCloseModal} post={selectedPost!}/>
+  const modal = <Modal onClose={handleCloseModal} note={selectedNote!}/>
   return (
     <div className="App">
       <NavigationButton
@@ -65,7 +65,7 @@ function App() {
           searchBarValue={searchBarValue}
         />
       </div>
-      <div className="h-full grid grid-cols-3">{renderedPosts}</div>
+      <div className="h-full grid grid-cols-3">{renderedNotes}</div>
       {showModal && modal}
     </div>
   );
