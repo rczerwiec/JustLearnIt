@@ -5,17 +5,31 @@ import Logo from "./components/Logo";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import Card from "./components/Card";
+import Modal from "./components/Modal";
 
 interface IDataElement {
-  _id: string;
   tag: string;
   title: string;
   description: [];
 }
 
 function App() {
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState<[]>([]);
+  const [selectedPost, setSelectedPost] = useState<IDataElement>();
   const [searchBarValue, setSearchBarValue] = useState<string>("");
+
+  const handleShowModal = (p: IDataElement) => {
+    setSelectedPost(p)
+    setShowModal(true);
+  }
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
 
   const onSearchBarValueChangedHandler = (value: string) => {
     setSearchBarValue(value);
@@ -26,7 +40,7 @@ function App() {
   });
 
   const renderedPosts = renderedValue.map((p, index) => {
-    return <Card key={index} post={p} />;
+    return <Card key={index} post={p} onClick={handleShowModal}/>;
   });
 
   const fetchBooks = useCallback(async () => {
@@ -34,11 +48,9 @@ function App() {
     setData(res.data);
   }, []);
 
-  useEffect(() => {
-    fetchBooks();
-  }, []);
 
-  console.log(searchBarValue);
+
+  const modal = <Modal onClose={handleCloseModal} post={selectedPost!}/>
   return (
     <div className="App">
       <NavigationButton
@@ -54,6 +66,7 @@ function App() {
         />
       </div>
       <div className="h-full grid grid-cols-3">{renderedPosts}</div>
+      {showModal && modal}
     </div>
   );
 }

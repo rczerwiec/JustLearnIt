@@ -7,7 +7,8 @@ module.exports = {
     extend: {},
     colors: {
       'grayMain': '#d9d9d9',
-      'graySecondary': '#F1F1F1'
+      'graySecondary': '#F1F1F1',
+      'whiteMain': '#ffffff'
     },
   },
   plugins: [],

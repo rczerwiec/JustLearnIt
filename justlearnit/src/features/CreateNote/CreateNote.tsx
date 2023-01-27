@@ -66,6 +66,7 @@ function CreateNote() {
                 editorState={editorState}
                 onChange={setEditorState}
                 handleKeyCommand={handleKeyCommand}
+                placeholder="Enter your description"
               />
             </div>
           </div>
