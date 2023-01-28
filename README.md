@@ -2,7 +2,7 @@
 
 ## About
 
-Simple note app for learning.
+Simple learning note app for personal use.
 
 ## TechStack
 
