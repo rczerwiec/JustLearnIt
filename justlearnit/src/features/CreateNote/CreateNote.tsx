@@ -21,7 +21,7 @@ function CreateNote() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const desc = stateToHTML(editorState.getCurrentContent());
-    await axios.post("http://localhost:5000/posts", {
+    await axios.post(process.env.REACT_APP_DATABASE!, {
       tag,
       title,
       description: desc,

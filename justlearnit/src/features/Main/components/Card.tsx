@@ -1,4 +1,6 @@
 import axios from "axios";
+import TrashIcon from "../../../shared/images/svg/delete-icon.svg";
+import { motion } from "framer-motion";
 
 interface ICard {
   note: {
@@ -7,20 +9,11 @@ interface ICard {
     tag: string;
     title: string;
   };
-  onClick: (p: { description: []; tag: string; title: string }) => void;
+  onClick: (p: { _id: string, description: []; tag: string; title: string }) => void;
+  onRemove: (id: string) => void;
 }
 
-function Card({ note, onClick }: ICard) {
-  const onDeleteButtonClick = async() => {
-
-    const url = `http://localhost:5000/posts/${note._id}`
-    console.log(url);
-
-    await axios.delete(url).then(() => {
-      console.log("Pomyślnie usunięto!");
-    })
-  }
-
+function Card({ note, onClick, onRemove }: ICard) {
 
   const renderedDescription = note.description.map((m: string) => {
     if (m.length <= 100) {
@@ -45,8 +38,8 @@ function Card({ note, onClick }: ICard) {
   });
 
   return (
-    <div className="bg-grayMain m-4 rounded-md h-60 hover:cursor-pointer shadow-md">
     <div
+      className="bg-grayMain m-4 rounded-md hover:cursor-pointer shadow-md"
       onClick={() => {
         onClick(note);
       }}
@@ -56,9 +49,13 @@ function Card({ note, onClick }: ICard) {
       </div>
       <div className="text-center text-xl">{note.title}</div>
       {renderedDescription}
-      
-    </div>
-    <div className="flex justify-end bg-graySecondary" onClick={onDeleteButtonClick}>Usuń</div>
+      <div className="flex justify-end">
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="" onClick={() => { onRemove(note._id) }}><img className="m-3 w-5" src={TrashIcon}></img></motion.button>
+      </div>
+
     </div>
   );
 }

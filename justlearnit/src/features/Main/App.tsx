@@ -8,20 +8,33 @@ import Card from "./components/Card";
 import Modal from "./components/Modal";
 
 interface IDataElement {
+  _id: string;
   tag: string;
   title: string;
   description: [];
 }
 
 function App() {
+  const [data, setData] = useState([]);
   useEffect(() => {
     fetchBooks();
   }, []);
-
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState<[]>([]);
   const [selectedNote, setSelectedNote] = useState<IDataElement>();
   const [searchBarValue, setSearchBarValue] = useState<string>("");
+
+  const onRemove = async (id: string) => {
+    const newData = data.filter((note:IDataElement) => {
+      return note._id !== id
+    })
+    const url = `http://localhost:5000/posts/${id}`
+
+    await axios.delete(url).then(() => {
+      console.log("Pomyślnie usunięto!");
+    })
+
+    setData(newData)
+  }
 
   const handleShowModal = (p: IDataElement) => {
     setSelectedNote(p)
@@ -40,7 +53,7 @@ function App() {
   });
 
   const renderedNotes = renderedValue.map((n, index) => {
-    return <Card key={index} note={n} onClick={handleShowModal}/>;
+    return <Card key={index} note={n} onClick={handleShowModal} onRemove={onRemove}/>;
   });
 
   const fetchBooks = useCallback(async () => {
