@@ -1,5 +1,8 @@
+import axios from "axios";
+
 interface ICard {
   note: {
+    _id: string,
     description: [];
     tag: string;
     title: string;
@@ -8,6 +11,17 @@ interface ICard {
 }
 
 function Card({ note, onClick }: ICard) {
+  const onDeleteButtonClick = async() => {
+
+    const url = `http://localhost:5000/posts/${note._id}`
+    console.log(url);
+
+    await axios.delete(url).then(() => {
+      console.log("Pomyślnie usunięto!");
+    })
+  }
+
+
   const renderedDescription = note.description.map((m: string) => {
     if (m.length <= 100) {
       return (
@@ -31,8 +45,8 @@ function Card({ note, onClick }: ICard) {
   });
 
   return (
+    <div className="bg-grayMain m-4 rounded-md h-60 hover:cursor-pointer shadow-md">
     <div
-      className="bg-grayMain m-4 rounded-md h-60 hover:cursor-pointer shadow-md"
       onClick={() => {
         onClick(note);
       }}
@@ -42,6 +56,9 @@ function Card({ note, onClick }: ICard) {
       </div>
       <div className="text-center text-xl">{note.title}</div>
       {renderedDescription}
+      
+    </div>
+    <div className="flex justify-end bg-graySecondary" onClick={onDeleteButtonClick}>Usuń</div>
     </div>
   );
 }
