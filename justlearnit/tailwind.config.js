@@ -8,7 +8,8 @@ module.exports = {
     colors: {
       'grayMain': '#d9d9d9',
       'graySecondary': '#F1F1F1',
-      'whiteMain': '#ffffff'
+      'whiteMain': '#ffffff',
+      'transparentGrayMain': "rgba(0,0,0, .8)"
     },
   },
   plugins: [],

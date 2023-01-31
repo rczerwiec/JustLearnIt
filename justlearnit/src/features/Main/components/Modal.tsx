@@ -29,8 +29,8 @@ function Modal({ onClose, note }: IProps) {
   })
 
   return ReactDOM.createPortal(
-    <div className="fixed flex justify-center top-0 left-0 w-full h-full bg-grayMain overflow-y-auto" onClick={onClose}>
-      <div className="absolute bg-whiteMain inset-40  bg-white rounded">
+    <div className="fixed flex z-0 justify-center top-0 left-0 w-full h-full bg-transparentGrayMain overflow-y-auto" onClick={onClose}>
+      <div className="absolute z-10 bg-whiteMain mt-40 w-3/4 opacity-100 bg-white rounded">
         <div className="flex flex-col justify-between ">
           <div className="bg-graySecondary m-4 p-3 text-center text-3xl">{note.tag}</div>
           <div className="text-center text-xl">{note.title}</div>
