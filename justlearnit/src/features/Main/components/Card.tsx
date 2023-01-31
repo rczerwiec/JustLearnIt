@@ -64,7 +64,7 @@ function Card({ note, onClick, onRemove }: ICard) {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="" onClick={() => { onRemove(note._id) }}><img className="m-3 w-5" src={TrashIcon}></img></motion.button>
+          className="" onClick={() => { onRemove(note._id) }}><img alt="trash icon" className="m-3 w-5" src={TrashIcon}></img></motion.button>
       </div>
     </div>
   );

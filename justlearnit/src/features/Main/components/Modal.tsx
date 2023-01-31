@@ -1,15 +1,13 @@
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
-
-
-
+import CloseIcon from "../../../shared/images/svg/close-icon.svg";
 
 interface IProps {
   onClose: () => void;
   note: {
-    description: [],
-    tag: string,
-    title: string,
+    description: [];
+    tag: string;
+    title: string;
   };
 }
 
@@ -24,20 +22,40 @@ function Modal({ onClose, note }: IProps) {
   console.log(note);
 
   const renderedDescription = note.description.map((m: string) => {
-    return <div key="0" className="text-center text-sm m-4" dangerouslySetInnerHTML={{ __html: m }}></div>;
-
-  })
+    return (
+      <div
+        key="0"
+        className="text-center text-sm m-4"
+        dangerouslySetInnerHTML={{ __html: m }}
+      ></div>
+    );
+  });
 
   return ReactDOM.createPortal(
-    <div className="fixed flex z-0 justify-center top-0 left-0 w-full h-full bg-transparentGrayMain overflow-y-auto" onClick={onClose}>
-      <div className="absolute z-10 bg-whiteMain mt-40 w-3/4 opacity-100 bg-white rounded">
-        <div className="flex flex-col justify-between ">
-          <div className="bg-graySecondary m-4 p-3 text-center text-3xl">{note.tag}</div>
+    <>
+      <div
+        className="fixed flex justify-center top-0 left-0 w-full h-full bg-transparentGrayMain"
+        onClick={onClose}
+      ></div>
+
+      <div className="absolute bg-whiteMain mt-20 h-full w-1/2 left-1/4 top-0 bg-white rounded ">
+        <div className="flex justify-end ">
+          <img
+            onClick={onClose}
+            alt="close icon"
+            className="hover:cursor-pointer m-2 w-5"
+            src={CloseIcon}
+          ></img>
+        </div>
+        <div className="absolute flex flex-col justify-between h-full overflow-y-auto scrollbar-hide">
+          <div className="bg-graySecondary mx-4 p-3 text-center text-3xl">
+            {note.tag}
+          </div>
           <div className="text-center text-xl">{note.title}</div>
           <div className="bg-whiteMain scrollbar">{renderedDescription}</div>
         </div>
       </div>
-    </div>,
+    </>,
     document.querySelector(".modal-container")!
   );
 }
