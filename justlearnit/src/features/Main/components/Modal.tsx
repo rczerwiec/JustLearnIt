@@ -47,12 +47,12 @@ function Modal({ onClose, note }: IProps) {
             src={CloseIcon}
           ></img>
         </div>
-        <div className="absolute flex flex-col justify-between h-full overflow-y-auto scrollbar-hide">
+        <div className="absolute flex flex-col shrink h-full w-full overflow-y-auto scrollbar-hide">
           <div className="bg-graySecondary mx-4 p-3 text-center text-3xl">
             {note.tag}
           </div>
-          <div className="text-center text-xl">{note.title}</div>
-          <div className="bg-whiteMain scrollbar">{renderedDescription}</div>
+          <div className="text-center text-xl  mx-4 p-3 ">{note.title}</div>
+          <div className="bg-whiteMain scrollbar ">{renderedDescription}</div>
         </div>
       </div>
     </>,
