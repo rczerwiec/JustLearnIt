@@ -5,7 +5,9 @@ import Logo from "../../shared/components/Logo";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import Card from "./components/Card";
-import Modal from "./components/Modal";
+import Modal from "../../shared/components/Modal";
+import NoteInfo from "./components/NoteInfo";
+import DeleteConfirmation from "./components/DeleteConfirmation";
 
 interface IDataElement {
   _id: string;
@@ -20,10 +22,10 @@ function App() {
     fetchBooks();
   }, []);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedNote, setSelectedNote] = useState<IDataElement>();
   const [searchBarValue, setSearchBarValue] = useState<string>("");
-
-  const onRemove = async (id: string) => {
+  const onRemoveConfirmed = async (id: string) => {
     const newData = data.filter((note:IDataElement) => {
       return note._id !== id
     })
@@ -44,6 +46,17 @@ function App() {
     setShowModal(false);
   }
 
+  const handleCloseDeleteConfirmationModal = () => {
+    setShowConfirmation(false);
+  }
+
+
+  const onRemoveConfirmation = () => {
+    console.log("confirmation")
+    setShowConfirmation(true);
+  }
+
+
   const onSearchBarValueChangedHandler = (value: string) => {
     setSearchBarValue(value);
   };
@@ -53,7 +66,7 @@ function App() {
   });
 
   const renderedNotes = renderedValue.map((n, index) => {
-    return <Card key={index} note={n} onClick={handleShowModal} onRemove={onRemove}/>;
+    return <Card key={index} note={n} onClick={handleShowModal} onRemove={onRemoveConfirmation}/>;
   });
 
   const fetchBooks = useCallback(async () => {
@@ -62,8 +75,8 @@ function App() {
   }, []);
 
 
-
-  const modal = <Modal onClose={handleCloseModal} note={selectedNote!}/>
+  const deleteConfirm = <Modal onClose={handleCloseDeleteConfirmationModal}><DeleteConfirmation></DeleteConfirmation></Modal>
+  const modal = <Modal onClose={handleCloseModal}><NoteInfo onClose={handleCloseModal} note={selectedNote!}></NoteInfo></Modal>
   return (
     <div className="App">
       <NavigationButton
@@ -80,6 +93,7 @@ function App() {
       </div>
       <div className="h-full grid grid-cols-3">{renderedNotes}</div>
       {showModal && modal}
+      {showConfirmation && deleteConfirm}
     </div>
   );
 }
