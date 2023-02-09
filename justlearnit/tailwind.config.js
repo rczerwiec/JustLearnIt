@@ -14,7 +14,8 @@ module.exports = {
       'redMain': '#f44336',
       'redHover': '#f66558',
       'whiteMain': '#ffffff',
-      'transparentGrayMain': "rgba(0,0,0, .8)"
+      'transparentGrayMain': "rgba(0,0,0, .8)",
+      'red': '#ff0000'
     },
   },
   plugins: [],

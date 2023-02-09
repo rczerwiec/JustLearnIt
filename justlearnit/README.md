@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+# JustLearnIT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In justlearnit directory you have to create .env file with following parameters:
+```
+REACT_APP_DATABASE=http://<ip/localhost>:<port>/posts
+```
 
 ## Available Scripts
 

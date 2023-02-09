@@ -1,16 +1,14 @@
 import axios from "axios";
 import TrashIcon from "../../../shared/images/svg/delete-icon.svg";
 import { motion } from "framer-motion";
+import { INote } from "../../../shared/types/types";
+
+
 
 interface ICard {
-  note: {
-    _id: string,
-    description: [];
-    tag: string;
-    title: string;
-  };
+  note: INote;
   onClick: (p: { _id: string, description: []; tag: string; title: string }) => void;
-  onRemove: (id: string) => void;
+  onRemove: (p: INote) => void;
 }
 
 function Card({ note, onClick, onRemove }: ICard) {
@@ -64,7 +62,7 @@ function Card({ note, onClick, onRemove }: ICard) {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="" onClick={() => { onRemove(note._id) }}><img alt="trash icon" className="m-3 w-5" src={TrashIcon}></img></motion.button>
+          className="" onClick={() => { onRemove(note) }}><img alt="trash icon" className="m-3 w-5" src={TrashIcon}></img></motion.button>
       </div>
     </div>
   );
